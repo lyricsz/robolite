@@ -43,8 +43,6 @@
             display: block;
         }
         #menu{
-            width: 100px;
-            height: 100px;
             position: absolute;
             left: 50%;
             top: 50%;
@@ -83,6 +81,17 @@
             let fullscreenHeight = fullscreenBtn.offsetHeight;
             fullscreenBtn.addEventListener("click", requestFullScreen);
             fullscreenBtn.style.fontSize = Math.min(fullscreenWidth, fullscreenHeight ) * 0.4 + "px";
+            let menu = document.getElementById("menu");
+            menu.style.width = "60vw";
+            menu.style.height = "40vh";
+            menu.style.position = "absolute";
+            menu.style.top = "50%";
+            menu.style.left = "50%";
+            menu.style.transform = "translate(-50%, -50%);"
+            menu.style.textAlign = "center"
+            let menuWidth = menu.offsetWidth;
+            let menuHeight = menu.offsetHeight;
+            fullscreenBtn.style.fontSize = Math.min(fullscreenWidth, fullscreenHeight ) * 0.6 + "px";
         }
         uiOff();
         window.addEventListener("resize", uiOff)
