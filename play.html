@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="Robolite, HTML5 Game, JavaScript Game, Pure JavaScript Game">
+    <meta name="description" content="A free open-source HTML5 Game. Have fun playing!">
+    <title>Robolite - Play</title>
+    <link rel="shortcut icon" href="icon.png"" type="image/x-icon">
+    <style>
+        *{
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            display: flex;
+            height: 100vh;
+ 
+        }
+
+        canvas{
+            object-fit: contain;
+            width: 100%;
+            border: none;
+            background-image: url("icon.png");
+        }
+        h3{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%);
+            font-size: 34pt;
+            background: transparent;
+            font-weight: 700;
+            color: gray;
+            text-shadow: 1px 1px 3px white;
+        }
+        .hide{
+            display: none;
+        }
+        .show{
+            display: block;
+        }
+        #menu{
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <button style="width: 15%; height: 8vh; background: red; position: absolute; top: 50px; left: 90%; transform: translateX(-50%); font-size: 20px;" id="fullscreen" >Full Screen</button>
+    <h3>Score: <span id="scoreUI">0</span></h3>
+    <img src="health.png" class="hide" id="health" />
+    <img src="sprite.png" class="hide" id="player" />
+    <img src="water.png" class="hide" id="water" />
+    <img src="shock1.png" class="hide" id="shock1" />
+    <img src="shock2.png" class="hide" id="shock2" />
+    <img src="shock3.png" class="hide" id="shock3" />
+    <img src="element.png" class="hide" id="element" />
+    <img src="layer1.png" class="hide" id="layer1" />
+    <img src="layer2.png" class="hide" id="layer2" />
+    <img src="layer3.png" class="hide" id="layer3" />
+    <canvas width="800" height="600" id="canvas"></canvas>
+    <div id="menu" class="hide">
+        <h1>Highscore: <span id="highscore">0</span></h1>
+
+        <button onclick="play()">Play</button>
+        <button onclick="back()">Back</button>
+    </div>
+
+    <script src="enemies.js"></script>
+    <script src="player.js"></script>
+    <script src="app.js"></script>
+    <script>
+        function uiOff(){
+            let fullscreenBtn = document.getElementById("fullscreen");
+            let fullscreenWidth = fullscreenBtn.offsetWidth;
+            let fullscreenHeight = fullscreenBtn.offsetHeight;
+            fullscreenBtn.addEventListener("click", requestFullScreen);
+            fullscreenBtn.style.fontSize = Math.min(fullscreenWidth, fullscreenHeight ) * 0.4 + "px";
+        }
+        uiOff();
+        window.addEventListener("resize", uiOff)
+
+        function requestFullScreen(){
+            if(!document.fullscreenElement){
+                canvas.requestFullscreen().catch((err) => {
+
+                })
+
+            }
+        }
+    </script>
+</body>
+</html>
