@@ -44,7 +44,7 @@
         }
     </style>
 </head>
-<body>
+<body id="body">
     <button style="width: 12vw; height: 12vh; background: red; position: absolute; top: 50px; right: 0%; transform: translateX(-50%);" id="fullscreen" >Full Screen</button>
     <img src="assets/health.png" class="hide" id="health" />
     <img src="assets/sprite.png" class="hide" id="player" />
@@ -93,10 +93,13 @@
 
         function requestFullScreen(){
             if(!document.fullscreenElement){
-                canvas.requestFullscreen().catch((err) => {
+                body.requestFullscreen().catch((err) => {
 
                 })
-
+            }
+            else 
+            {
+                document.exitFullscreen()
             }
         }
     </script>
