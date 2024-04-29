@@ -3,10 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ROBOLITE - An HTML5 Game</title>
+    <link rel="stylesheet" href="styles.css" type="text/css" />
 </head>
 <body>
-    <h1></h1>
+    <h1>ROBOLITE</h1>
     <button onclick="window.location='play.html'">Play</button>
+    <button onclick="window.location='help.html'">Help</button>
+    <button onclick="window.location='about.html'">About</button>
+    <button onclick="window.close()">Exit</button>
+
+    <script>
+        let h1 = document.querySelector("h1");
+        let btn = document.querySelectorAll("button");
+        h1.style.fontSize = Math.min(h1.offsetWidth, h1.offsetHeight) * 0.32 + "px";
+        let btnSize = Math.min(btn[0].offsetWidth, btn[0].offsetHeight) * 0.35;
+
+        btn.forEach((button) => {
+            button.style.fontSize = btnSize + "px";
+        });
+
+    </script>
 </body>
 </html>

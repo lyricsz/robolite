@@ -3,7 +3,6 @@ const context = canvas.getContext("2d");
 let score = 0;
 context.font = "24pt Helvetica";
 let timer = 10000;
-let scoreUI = document.getElementById("scoreUI");
 let max = 2;
 let healthImage = document.getElementById("health");
 let playerImg = document.getElementById("player");
@@ -12,6 +11,25 @@ let shock1 = document.getElementById("shock1");
 let shock2 = document.getElementById("shock2");
 let shock3 = document.getElementById("shock3");
 let element = document.getElementById("element")
+let highscore = document.getElementById("highscore");
+let sound = document.querySelector("audio");
+
+if(window.localStorage.getItem("playingRoboliteFiorTheFirstTime") === "null" || window.localStorage.getItem("playingRoboliteFiorTheFirstTime") === "undefined" || window.localStorage.getItem("playingRoboliteFiorTheFirstTime") === " "){
+    let confirmation = confirm("Want to checkout the tutorial?")
+    if(confirm){
+        window.localStorage.getItem("playingRoboliteFiorTheFirstTime") = "no";
+        window.location = "./help.html";
+    }
+    
+}
+else{
+    playSound();   
+}
+
+function playSound(){
+    sound.currentTime = "0.00"
+    sound.play()
+}
 
 let shocks = [shock1, shock2, shock3];
 
@@ -31,9 +49,12 @@ class Health{
         this.x -= this.dx;
         this.y += Math.sin(this.angle) * 2;
         this.angle += 0.1;
+        console.log(this.zig)
         if(this.zig) this.dx += Math.cos(this.angle);
         if(this.x < 0 - this.width){
             this.x = canvas.width * 4;
+            if(Math.random() < 0.5){} this.zig = true } 
+            else this.zig = false;
         }
     }
     draw(){
@@ -48,7 +69,7 @@ let health = new Health(canvas.width, 200, 50.5, 115.25, false);
 let backgroundLayer1 = document.getElementById("layer1");
 let backgroundLayer2 = document.getElementById("layer2");
 let backgroundLayer3 = document.getElementById("layer3");
-let gameSpeed = 10;
+let gameSpeed = 7;
 class Layer{
     constructor(image, speedModifier){
         this.x = 0;
@@ -78,11 +99,11 @@ const layer1 = new Layer(backgroundLayer1, 0.2);
 const layer2 = new Layer(backgroundLayer2, 0.8);
 const layer3 = new Layer(backgroundLayer3, 1);
 
-const gameObjects = [layer1, layer2, layer3];
+let gameObjects = [layer1, layer2, layer3];
 
-const player = new Player(60, 60, 100, 100);
+let player = new Player(60, 60, 100, 100);
 
-const goombu = new Goombu(canvas.width + 100, canvas.height - 100, 100, 100)
+let goombu = new Goombu(canvas.width + 100, canvas.height - 100, 100, 100)
 let enemies = [];
 let enemyTime = 0;
 let lastTime = 0;
@@ -102,14 +123,14 @@ function animate(timestamp){
     timer--;
         
     enemies = enemies.filter((enemy) => !enemy.markedForDeletion);
-    
+
     enemies.forEach((enemy) => {
         enemy.draw();
         enemy.update();
         let ourReturn = checkCollision(player, enemy)
         if(ourReturn === "score"){
             score++;
-            scoreUI.innerText = score;
+            if(Number(highscore.textContent) < score) highscore.textContent = score;
             player.health+=enemy.lives;
             enemy.markedForDeletion = true;
         } else if (ourReturn === "true"){
@@ -126,7 +147,8 @@ function animate(timestamp){
 
     ui()
 
-    if(loop) requestAnimationFrame(animate);
+    if(loop) requestAnimationFrame(animate)
+    else context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 window.onload = () => {
@@ -157,14 +179,18 @@ window.addEventListener("keyup", function(e) {
 }, false);
 
 function gameOver(){
+
     if(!(player.health < 0)) {
         player.health -= 50;
     }  else {
         player.health = 0;
-        document.exitFullscreen().then(
-            menu.setAttribute("class", "show")
-        );
-
+        if(document.fullscreenElement){
+            document.exitFullscreen().then().catch(err => console.log(err));
+            menu.setAttribute("class", "show");
+        } else {
+            menu.setAttribute("class", "show");
+        }
+        uiOff()
         loop = false;
     }
 }
@@ -190,6 +216,14 @@ function ui(){
     context.fillRect(124, 42, 400, 24);
     context.fillStyle = "red";
     context.fillRect(124, 42, player.health, 24);
+    context.save();
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    context.fillStyle = "#eee";
+    context.fillText("Score: " + score, canvas.width * 0.5, canvas.height * 0.5);
+    context.fillStyle = "#232333";
+    context.fillText("Score: " + score, canvas.width * 0.5 + 1 , canvas.height * 0.5 + 3);
+    context.restore()
 }
 
 let allEnemies = [Goombu, Water, Shocks];
@@ -203,3 +237,29 @@ function createEnemies(){
     }
     else enemyTime++;
 }
+
+function play(){
+
+    score = 0;
+    timer = 10000;
+    max = 2;
+
+    player = new Player(60, 60, 100, 100);
+    health = new Health(canvas.width, 200, 50.5, 115.25, false);
+    gameObjects = [layer1, layer2, layer3];
+    enemies = [];
+    enemyTime = 0;
+    lastTime = 0;
+    enemyTimer = 700;
+    loop = true;
+
+    
+    let allElementShown = document.querySelectorAll(".show");
+    allElementShown.forEach(el => {
+        el.setAttribute("class", "hide")
+    })
+
+    playSound();
+    animate();
+}
+

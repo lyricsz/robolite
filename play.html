@@ -7,7 +7,8 @@
     <meta name="keywords" content="Robolite, HTML5 Game, JavaScript Game, Pure JavaScript Game">
     <meta name="description" content="A free open-source HTML5 Game. Have fun playing!">
     <title>Robolite - Play</title>
-    <link rel="shortcut icon" href="icon.png"" type="image/x-icon">
+    <link rel="shortcut icon" href="./icon.png" type="image/x-icon">
+    <link rel="icon" href="./icon.png" type="image/x-icon" >
     <style>
         *{
             margin: 0;
@@ -25,17 +26,7 @@
             border: none;
             background-image: url("icon.png");
         }
-        h3{
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%);
-            font-size: 34pt;
-            background: transparent;
-            font-weight: 700;
-            color: gray;
-            text-shadow: 1px 1px 3px white;
-        }
+        
         .hide{
             display: none;
         }
@@ -47,51 +38,55 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
+            color: white;
+            border: 1px solid gray;
+            background-color: rgba(35, 35, 51, 0.5);
         }
     </style>
 </head>
 <body>
-    <button style="width: 15%; height: 8vh; background: red; position: absolute; top: 50px; left: 90%; transform: translateX(-50%); font-size: 20px;" id="fullscreen" >Full Screen</button>
-    <h3>Score: <span id="scoreUI">0</span></h3>
-    <img src="health.png" class="hide" id="health" />
-    <img src="sprite.png" class="hide" id="player" />
-    <img src="water.png" class="hide" id="water" />
-    <img src="shock1.png" class="hide" id="shock1" />
-    <img src="shock2.png" class="hide" id="shock2" />
-    <img src="shock3.png" class="hide" id="shock3" />
-    <img src="element.png" class="hide" id="element" />
-    <img src="layer1.png" class="hide" id="layer1" />
-    <img src="layer2.png" class="hide" id="layer2" />
-    <img src="layer3.png" class="hide" id="layer3" />
+    <button style="width: 12vw; height: 12vh; background: red; position: absolute; top: 50px; right: 0%; transform: translateX(-50%);" id="fullscreen" >Full Screen</button>
+    <img src="./assets/health.png" class="hide" id="health" />
+    <img src="./assets/sprite.png" class="hide" id="player" />
+    <img src="./assets/water.png" class="hide" id="water" />
+    <img src="./assets/shock1.png" class="hide" id="shock1" />
+    <img src="./assets/shock2.png" class="hide" id="shock2" />
+    <img src="./assets/shock3.png" class="hide" id="shock3" />
+    <img src="./assets/element.png" class="hide" id="element" />
+    <img src="./assets/layer1.png" class="hide" id="layer1" />
+    <img src="./assets/layer2.png" class="hide" id="layer2" />
+    <img src="./assets/layer3.png" class="hide" id="layer3" />
+    <audio src="./assets/bg.mp3" preload="metadata" ></audio>
     <canvas width="800" height="600" id="canvas"></canvas>
     <div id="menu" class="hide">
         <h1>Highscore: <span id="highscore">0</span></h1>
 
-        <button onclick="play()">Play</button>
-        <button onclick="back()">Back</button>
+        <button onclick="play()" id="play">Play</button>
+        <button onclick="back()" id="back">Back</button>
     </div>
-
-    <script src="enemies.js"></script>
-    <script src="player.js"></script>
-    <script src="app.js"></script>
     <script>
         function uiOff(){
             let fullscreenBtn = document.getElementById("fullscreen");
             let fullscreenWidth = fullscreenBtn.offsetWidth;
             let fullscreenHeight = fullscreenBtn.offsetHeight;
             fullscreenBtn.addEventListener("click", requestFullScreen);
-            fullscreenBtn.style.fontSize = Math.min(fullscreenWidth, fullscreenHeight ) * 0.4 + "px";
+            let fontSize = Math.min(fullscreenWidth, fullscreenHeight ) * 0.15;
+            fullscreenBtn.style.fontSize = fontSize + "px";
             let menu = document.getElementById("menu");
             menu.style.width = "60vw";
             menu.style.height = "40vh";
-            menu.style.position = "absolute";
-            menu.style.top = "50%";
-            menu.style.left = "50%";
+            // menu.style.position = "absolute";
+            // menu.style.top = "50%";
+            // menu.style.left = "50%";
             menu.style.transform = "translate(-50%, -50%);"
             menu.style.textAlign = "center"
+            let btn1 = document.getElementById("play");
+            let btn2 = document.getElementById("back");
             let menuWidth = menu.offsetWidth;
             let menuHeight = menu.offsetHeight;
-            fullscreenBtn.style.fontSize = Math.min(fullscreenWidth, fullscreenHeight ) * 0.6 + "px";
+            menu.style.fontSize = Math.min(menuWidth, menuHeight ) * 0.15 + "px";
+            btn1.style.fontSize = btn2.style.fontSize = menu.style.fontSize;
+            
         }
         uiOff();
         window.addEventListener("resize", uiOff)
@@ -105,5 +100,9 @@
             }
         }
     </script>
+    <script src="enemies.js"></script>
+    <script src="player.js"></script>
+    <script src="app.js"></script>
+
 </body>
 </html>

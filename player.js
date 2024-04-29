@@ -12,7 +12,7 @@ class Player{
         this.jump = false;
         this.easeLeft = false;
         this.easeRight = false;
-        this.health = 300;
+        this.health = 380;
         this.limit = 400;
         this.image = playerImg;
         this.spriteWidth = 1146;
@@ -38,7 +38,7 @@ class Player{
 
         this.x = Math.max(48, Math.min(this.x, (canvas.width * 0.75) - this.width))
         
-        if(this.health > 0) this.health-=0.2;
+        if(this.health > 0) this.health-=0.1;
         else gameOver()
         if(this.time >= this.timer){
             this.time = 0;

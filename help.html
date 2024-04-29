@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .red{
+            color: #f33;
+        }
+        hr{
+            border: none;
+            border-bottom: 5px ridge seagreen;
+            height: 3vh;
+            outline: none;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <h1>ROBOLITE - Help</h1>
+    <hr />
+    <p>
+        Help...
+        <dl>
+            <dt class="red">Moving players: </dt>
+            <dd>Move players with keys "Arrow Up" , "Arrow Left" , "Arrow Right" , "Arrow Down". If there's no keyboard, use the buttons provided using touch. </dd>
+            <dt class="red">Health: </dt>
+            <dd><b>ROBOLITE Health </b> is being affected due to time. Collect <b>Batteries </b> to boost <b>ROBOLITE Health</b>.Killing <b>Water plannet and other element</b> increases <b>ROBOLITE Health</b>
+                . Avoid ELECTRIC Shocks... </dd>
+            <dt class="red">Don't understand a thing: </dt>
+            <dd>Watch the gameplay :) </dd>
+        </dl>
+    </p>
+    <button onclick="window.location='index.html'">Back</button>
+
+    <script>
+        let h1 = document.querySelector("h1");
+        let btn = document.querySelectorAll("button");
+        h1.style.fontSize = Math.min(h1.offsetWidth, h1.offsetHeight) * 0.32 + "px";
+        let btnSize = Math.min(btn[0].offsetWidth, btn[0].offsetHeight) * 0.35;
+
+        btn.forEach((button) => {
+            button.style.fontSize = btnSize + "px";
+        });
+        
+    </script>
+</body>
+</html>

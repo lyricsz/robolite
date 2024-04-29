@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .red{
+            color: #f33;
+        }
+        hr{
+            border: none;
+            border-bottom: 5px ridge seagreen;
+            height: 3vh;
+            outline: none;
+            background: transparent;
+        }
+    </style>
+</head>
+<body>
+    <h1>ROBOLITE - About</h1>
+    <hr />
+    <p>
+        About...
+        <dl>
+            <dt class="red">Programmers: </dt>
+            <dd><b>PJ Dev</b>, <b>Lyricsz Game Dev team</b>... </dd>
+            <dt class="red">Sound: </dt>
+            <dd></dd>
+            <dt class="red">Robolite: </dt>
+            <dd></dd>
+            <dt class="red">Other Assets: </dt>
+            <dd> </dd>
+        </dl>
+    </p>
+    <button onclick="window.location='index.html'">Back</button>
+
+    <script>
+        let h1 = document.querySelector("h1");
+        let btn = document.querySelectorAll("button");
+        h1.style.fontSize = Math.min(h1.offsetWidth, h1.offsetHeight) * 0.32 + "px";
+        let btnSize = Math.min(btn[0].offsetWidth, btn[0].offsetHeight) * 0.35;
+
+        btn.forEach((button) => {
+            button.style.fontSize = btnSize + "px";
+        });
+        
+    </script>
+</body>
+</html>

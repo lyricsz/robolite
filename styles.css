@@ -1,0 +1,37 @@
+@font-face {
+    font-family: bfont;
+    src: url("assets/test.ttf");
+}
+
+*{
+    font-family: bfont;
+    text-align: center;
+    image-rendering: pixelated;
+    text-shadow: 1px 1px 20px forestgreen;
+}
+body{
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-image: url("icon.png");
+    background-color: rgb(0, 114, 76);
+}
+h1{
+    width: 100vw;
+    height: 20vh;
+}
+
+button{
+    background-color: transparent;
+    border: none;
+    width: 55%;
+    height: 10vh;
+    margin-top: 2vh;
+    border-radius: 20px;
+    text-shadow: 1px 1px 20px forestgreen;
+    border-bottom: 3px ridge green;
+}
+button:hover{
+    box-shadow: 1px 1px 10px aqua;
+}
