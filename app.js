@@ -49,11 +49,10 @@ class Health{
         this.x -= this.dx;
         this.y += Math.sin(this.angle) * 2;
         this.angle += 0.1;
-        console.log(this.zig)
         if(this.zig) this.dx += Math.cos(this.angle);
         if(this.x < 0 - this.width){
             this.x = canvas.width * 4;
-            if(Math.random() < 0.5){} this.zig = true } 
+            if(Math.random() < 0.5){ this.zig = true } 
             else this.zig = false;
         }
     }
@@ -139,8 +138,10 @@ function animate(timestamp){
         }
     });
     if(checkCollision(player, health) == "true"){
-        player.health += 50;
+        player.health += 70;
         health.x = canvas.width * Math.floor(Math.random() * 2 + 2)
+        if(Math.random() < 0.5){ health.zig = true } 
+        else health.zig = false;
     }
     health.update();
     health.draw()
