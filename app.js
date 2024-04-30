@@ -148,9 +148,7 @@ function animate(timestamp){
     else context.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-window.onload = () => {
-    requestAnimationFrame(animate)
-};
+
 
 window.addEventListener("keydown", function(e) {
     if((e.code === "ArrowUp" || e.code === "Space") && player.jump){
@@ -217,9 +215,9 @@ function ui(){
     context.textAlign = "center";
     context.textBaseline = "middle";
     context.fillStyle = "#eee";
-    context.fillText("Score: " + score, canvas.width * 0.5, canvas.height * 0.5);
+    context.fillText("Score: " + score, canvas.width * 0.5, canvas.height * 0.3);
     context.fillStyle = "#232333";
-    context.fillText("Score: " + score, canvas.width * 0.5 + 1 , canvas.height * 0.5 + 3);
+    context.fillText("Score: " + score, canvas.width * 0.5 + 1 , canvas.height * 0.3 + 3);
     context.restore()
 }
 

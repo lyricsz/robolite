@@ -109,6 +109,8 @@
         <button onclick="play()" id="play">Play</button>
         <button onclick="back()" id="back">Back</button>
     </div>
+    
+   
     <script>
         function uiOff(){
             let fullscreenBtn = document.getElementById("fullscreen");
@@ -152,6 +154,28 @@
     <script src="enemies.js"></script>
     <script src="player.js"></script>
     <script src="app.js"></script>
+    <script>
+        var PleaseRotateOptions = {
+            startOnPageLoad: true,
+            onHide: function(){
+                loop = true;
+                window.onload = () => {
+                    requestAnimationFrame(animate)
+                };
+            },
+            onShow: function(){
+                loop = false;
+            },
+            forcePortrait: false,
+            message: "Please Rotate Your Device",
+            subMessage: "(or click to continue)",
+            allowClickBypass: true,
+            onlyMobile: true,
+            zIndex: 1000,
+            iconNode: null
+        };
+    </script>
+    <script src="pleaserotate.min.js"></script>
 
 </body>
 </html>
