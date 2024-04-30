@@ -12,7 +12,7 @@ class Enemies{
         this.x-=this.speed;
         if(this.x < 0 - this.width){
             this.markedForDeletion = true;
-            if(this.type !== "electric") player.health -= 100;
+            if(this.type !== "electric") player.health -= 60;
         }
         if(this.frame !== null){
             this.frame < this.maxFrame? this.frame++ : this.frame = 0;
@@ -25,7 +25,7 @@ class Goombu extends Enemies{
         x = canvas.width + 64;
         y = canvas.height - 64;
         super(x, y, width, height, speed);
-        this.lives = 30;
+        this.lives = 55;
         this.width = 64;
         this.height = 64;
         this.image = element;
@@ -39,7 +39,7 @@ class Goombu extends Enemies{
 class Water extends Enemies{
     constructor(x, y, width, height, speed){
         super(x, y, width, height, speed);
-        this.lives = 20;
+        this.lives = 45;
         this.image = planet;
         this.type = "water";
     }
@@ -55,7 +55,7 @@ class Shocks extends Enemies{
         super(x, y, width, height, speed);
         this.width = 68.5;
         this.height = 149.25;
-        this.lives = -40;
+        this.lives = -45;
         this.frame = 0;
         this.maxFrame = 2;
         this.type = "electric";

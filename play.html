@@ -25,6 +25,7 @@
             width: 100%;
             border: none;
             background-image: url("icon.png");
+            background-color: #232333;
         }
         
         .hide{
@@ -42,9 +43,53 @@
             border: 1px solid gray;
             background-color: rgba(35, 35, 51, 0.5);
         }
+        .red{
+            position: absolute;
+            z-index: 10;
+            border: none;
+        }
+        #top{
+            width: 56px;
+            height: 84px;
+            left: 3vw;
+            bottom: 6%;
+            z-index: 10;
+            background: transparent url("./assets/upBtn.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            outline: none;
+        }
+        #left{
+            right: 20vw;
+            width: 78px;
+            height: 62px;
+            bottom: 6%;
+            z-index: 12;
+            background: transparent url("./assets/leftBtn.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            outline: none;
+        }
+        #right{
+            right: 9vw;
+            width: 78px;
+            height: 62px;
+            bottom: 6%;
+            z-index: 14;
+            background: transparent url("./assets/rightBtn.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            outline: none;
+        }
+        #top:hover, #left:hover, #right:hover{
+            outline: 1px solid red;
+        }
     </style>
 </head>
 <body id="body">
+    <button class="red" id="top"></button>
+    <button class="red" id="left"></button>
+    <button class="red" id="right"></button>
     <button style="width: 12vw; height: 12vh; background: red; position: absolute; top: 50px; right: 0%; transform: translateX(-50%);" id="fullscreen" >Full Screen</button>
     <img src="assets/health.png" class="hide" id="health" />
     <img src="assets/sprite.png" class="hide" id="player" />
@@ -92,6 +137,7 @@
         window.addEventListener("resize", uiOff)
 
         function requestFullScreen(){
+            console.log(window.screen.orientation)
             if(!document.fullscreenElement){
                 body.requestFullscreen().catch((err) => {
 

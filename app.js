@@ -2,7 +2,7 @@ const canvas = document.getElementById("canvas");
 const context = canvas.getContext("2d");
 let score = 0;
 context.font = "24pt Helvetica";
-let timer = 10000;
+let timer = 20000;
 let max = 2;
 let healthImage = document.getElementById("health");
 let playerImg = document.getElementById("player");
@@ -34,7 +34,7 @@ function playSound(){
 let shocks = [shock1, shock2, shock3];
 
 class Health{
-    constructor(x, y, width, height, zig){
+    constructor(x, y, width, height){
         this.x = x;
         this.y = y;
         this.width = width;
@@ -42,18 +42,14 @@ class Health{
         this.color = "white";
         this.angle = 0;
         this.dx = 2;
-        this.zig = zig;
         this.image = healthImage;
     }
     update(){
         this.x -= this.dx;
-        this.y += Math.sin(this.angle) * 2;
+        this.y += Math.sin(this.angle) * 3;
         this.angle += 0.1;
-        if(this.zig) this.dx += Math.cos(this.angle);
         if(this.x < 0 - this.width){
-            this.x = canvas.width * 4;
-            if(Math.random() < 0.5){ this.zig = true } 
-            else this.zig = false;
+            this.x = canvas.width * 3;
         }
     }
     draw(){
@@ -63,7 +59,7 @@ class Health{
     }
 }
 
-let health = new Health(canvas.width, 200, 50.5, 115.25, false);
+let health = new Health(canvas.width, 200, 50.5, 115.25);
 
 let backgroundLayer1 = document.getElementById("layer1");
 let backgroundLayer2 = document.getElementById("layer2");
@@ -94,8 +90,8 @@ class Layer{
     }
 }
 
-const layer1 = new Layer(backgroundLayer1, 0.2);
-const layer2 = new Layer(backgroundLayer2, 0.8);
+const layer1 = new Layer(backgroundLayer1, 0.1);
+const layer2 = new Layer(backgroundLayer2, 0.4);
 const layer3 = new Layer(backgroundLayer3, 1);
 
 let gameObjects = [layer1, layer2, layer3];
@@ -128,7 +124,7 @@ function animate(timestamp){
         enemy.update();
         let ourReturn = checkCollision(player, enemy)
         if(ourReturn === "score"){
-            score++;
+            score+=100;
             if(Number(highscore.textContent) < score) highscore.textContent = score;
             player.health+=enemy.lives;
             enemy.markedForDeletion = true;
@@ -138,16 +134,16 @@ function animate(timestamp){
         }
     });
     if(checkCollision(player, health) == "true"){
-        player.health += 70;
-        health.x = canvas.width * Math.floor(Math.random() * 2 + 2)
-        if(Math.random() < 0.5){ health.zig = true } 
-        else health.zig = false;
+        player.health += 140;
+        health.x = canvas.width * Math.floor(Math.random() * 2 + 3)
     }
+    if(gameSpeed < 34) gameSpeed+=0.001, player.timer -= 0.00005;
     health.update();
-    health.draw()
+    health.draw();
+
 
     ui()
-
+    if(timer < 0) loop = false, gameOver();
     if(loop) requestAnimationFrame(animate)
     else context.clearRect(0, 0, canvas.width, canvas.height);
 }
@@ -158,7 +154,7 @@ window.onload = () => {
 
 window.addEventListener("keydown", function(e) {
     if((e.code === "ArrowUp" || e.code === "Space") && player.jump){
-        player.vy = 15;
+        player.vy = 14;
         player.jump = false;
     }
     if(e.code === "ArrowLeft"){
@@ -167,7 +163,7 @@ window.addEventListener("keydown", function(e) {
     if(e.code === "ArrowRight"){
         player.vx = 3
     }
-    
+    e.preventDefault()
 })
 
 window.addEventListener("keyup", function(e) {
@@ -180,8 +176,8 @@ window.addEventListener("keyup", function(e) {
 }, false);
 
 function gameOver(){
-
-    if(!(player.health < 0)) {
+    if(!loop) player.health = -1;
+    if(!(player.health <= 0)) {
         player.health -= 50;
     }  else {
         player.health = 0;
@@ -232,7 +228,7 @@ let allEnemies = [Goombu, Water, Shocks];
 function createEnemies(){
     if(enemyTime >= enemyTimer ){
         enemies.push(new allEnemies[Math.floor(Math.random()* allEnemies.length)](canvas.width + 100, canvas.height - 100, 100, 100, Math.floor(Math.random() * (max * 0.5) + max)))
-        max+=0.1;
+        if(max < 10) max+=0.1;
         enemyTime = 0;
         enemyTimer = Math.floor(Math.random() * (200 - 100) + 100)
     }
@@ -242,7 +238,7 @@ function createEnemies(){
 function play(){
 
     score = 0;
-    timer = 10000;
+    timer = 20000;
     max = 2;
 
     player = new Player(60, 60, 100, 100);
@@ -253,7 +249,7 @@ function play(){
     lastTime = 0;
     enemyTimer = 700;
     loop = true;
-
+    gameSpeed = 7;
     
     let allElementShown = document.querySelectorAll(".show");
     allElementShown.forEach(el => {
@@ -264,3 +260,41 @@ function play(){
     animate();
 }
 
+document.getElementById("top").ontouchstart = (e) => {
+    if(player.jump){
+    player.vy = 14;
+    player.jump = false;
+    }
+    e.preventDefault()
+}
+
+document.getElementById("left").ontouchstart = (e) => {
+    player.vx = -3;
+    e.preventDefault()
+}
+
+document.getElementById("right").ontouchstart = (e) => {
+    player.vx = 3;
+    e.preventDefault()
+}
+
+document.getElementById("left").ontouchend = (e) => {
+    if(!player.easeRight && !player.easeLeft)
+    {
+        player.easeLeft = true;
+    }
+    e.preventDefault()
+}
+
+document.getElementById("right").ontouchend = (e) => {
+    if(!player.easeRight && !player.easeLeft)
+    {
+        player.easeRight = true;
+    }
+
+    e.preventDefault()
+}
+
+function back(){
+    window.location = "index.html"
+}
